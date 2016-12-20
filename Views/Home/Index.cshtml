@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+@if (ViewBag.Error != null)
+{
+    <h3 style="color: red;">@ViewBag.Error</h3>
+}
+
+@if (ViewBag.Host == null)
+{
+    <h4 style="color: green;">@ViewBag.Host</h4>
+
+<center><form method="post">
+    <input name="url" placeholder="Enter url..." style="font-size: 20px"/>
+</form></center>
+}
+else
+{
+
+  <div id="chartContainer" style="height: 500px; width: 100%;display: block;">
+    </div>
+
+<table border="1" id="result" style="width:100%">
+    <tr>
+        <th>URL</th>
+        <th>Min</th>
+        <th>Max</th>
+    </tr>
+
+</table>
+
+<script type="text/javascript">
+
+    var urlsCountCurrent = 0;
+
+    setInterval(function () {
+
+        $.ajax({
+            url: "/Home/GetURLs",
+            type: "post",
+            data: { evaluateId: @ViewBag.EvaluateId},
+            async: true,
+            success: function (json) {
+                for (var i = 0; i < json.length; ++i) {
+
+                    dataChart.push([json[i].Link, json[i].Min, json[i].Max]);
+
+                    urlsCountCurrent++;
+
+                    var item = '<tr class="item">' +
+                            '<td id="url">' + json[i].Link + '</td>' +
+                            '<td id="min">' + json[i].Min + '</td>' +
+                            '<td id="max">' + json[i].Max + '</td> </tr>';
+
+                    if ($('.item').length === 0) {
+                        $('#result').append(item);
+                    }
+                    else {
+                        $('.item').each(function (index, elem) {
+
+                            if (json[i].Max >= $(elem).children('#max').html()) {
+                                $(elem).before(item);
+                                return false;
+                            }
+                            else if ($('.item').length - 1 === index) {
+                                $('#result').append(item);
+                                return false;
+                            }
+                        });
+                    }
+                }
+
+            }
+        });
+
+        if (dataChart.length != 1)
+            drawChart();
+
+        if(urlsCountCurrent == @ViewBag.URLsCount) return false;
+
+    }, 500);
+</script>
+}

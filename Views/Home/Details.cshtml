@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TestProject.Models.URL>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+<div id="chartContainer" style="height: 500px; width: 100%;display: block;">
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Link)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Min)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Max)
+        </th>
+    </tr>
+
+@foreach (var item in Model.OrderByDescending(x => x.Max)) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Link)
+            <div style="color: red;">@Html.DisplayFor(modelItem => item.Error)</div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Min)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Max)
+        </td>
+    </tr>
+}
+
+</table>
+
+<script type="text/javascript">
+
+    dataChart.push(@Html.Raw(string.Join(", ", @Model.Select(f => string.Format("['{0}', {1}, {2}]", f.Link, f.Min, f.Max)).ToArray())));
+
+    //drawChart();
+</script>

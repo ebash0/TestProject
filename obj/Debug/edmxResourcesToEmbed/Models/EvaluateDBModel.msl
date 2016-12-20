@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EvaluateDBModelStoreContainer" CdmEntityContainer="EvaluateDBEntities">
+    <EntitySetMapping Name="Evaluates">
+      <EntityTypeMapping TypeName="EvaluateDBModel.Evaluate">
+        <MappingFragment StoreEntitySet="Evaluates">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Host" ColumnName="Host" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="URLs">
+      <EntityTypeMapping TypeName="EvaluateDBModel.URL">
+        <MappingFragment StoreEntitySet="URLs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="Min" ColumnName="Min" />
+          <ScalarProperty Name="Max" ColumnName="Max" />
+          <ScalarProperty Name="Error" ColumnName="Error" />
+          <ScalarProperty Name="EvaluateId" ColumnName="EvaluateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
